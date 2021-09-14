@@ -1,5 +1,6 @@
 from flask import Flask, request
 from flask_restx import Api, Resource
+from flask_cors import CORS
 import urllib.request
 import urllib.parse
 import json
@@ -8,6 +9,7 @@ import json
 secrets = json.loads(open('./secrets.json').read())
 
 app = Flask('url_shorten')
+CORS(app, resources={r'*':{'origins':'*'}})
 api = Api(app)
 client_id = secrets['client_id']
 client_secret = secrets['client_secret']
@@ -25,7 +27,6 @@ class shortUrl(Resource):
         enc_text = urllib.parse.quote(url)
         data = 'url=' + enc_text
         request_naver = urllib.request.Request('https://openapi.naver.com/v1/util/shorturl')
-        request_naver.add_header('Access-Control-Allow-Origin', '*')
         request_naver.add_header('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
         request_naver.add_header('X-Naver-Client-Id', client_id)
         request_naver.add_header('X-Naver-Client-Secret', client_secret)
