@@ -46,10 +46,10 @@
 
     data: () => ({
       rules: [
-        value => {
-          const pattern = /(http|https):\/\/((\w+)[.])+(asia|biz|cc|cn|com|de|eu|in|info|jobs|jp|kr|mobi|mx|name|net|nz|org|travel|tv|tw|uk|us)(\/(\w*))*$/i;
-          return pattern.test(value) || '유효하지 않은 URL 입니다'
-        },
+        // value => {
+        //   const pattern = /(http|https):\/\/((\w+)[.])+(asia|biz|cc|cn|com|de|eu|in|info|jobs|jp|kr|mobi|mx|name|net|nz|org|travel|tv|tw|uk|us)(\/(\w*))*$/i;
+        //   return pattern.test(value) || '유효하지 않은 URL 입니다'
+        // },
       ],
       origin_url : '',
       shorten_url : '',
@@ -63,6 +63,9 @@
       .then((response) => {
         this.shorten_url= response.data.url
         this.$copyText(this.shorten_url)
+      })
+      .catch(() => {
+        this.shorten_url= 'Incorrect URL'
       })
     }
     }
